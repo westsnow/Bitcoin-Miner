@@ -1,0 +1,15 @@
+1. enter this folder. It contains an eclipse project and some documents.
+
+2. open eclipse, and import this project.
+
+3. import external akka libs to your project.
+
+4. The code has two entry files(ServerMain.scala and ClientMain.scala ).
+To run ServerMain.scala, you should define the number of zeros in the coins you wanna find, and the server's running time. 
+For example "java -jar serverMain.jar 7 300" ask the server to run 300 seconds to find the coins containing 7 zeros as prefix.(the default parameter is 5 and 30)
+Importantly, you should modify the ServerMain.java, because you should define your own ip address, you can define it by modify the 38th line 'hostname = "127.0.0.1"'. And the default port is 11111.
+To run ClientMain.scala, there is one parameter---server'ip. So, you just run like this "java -jar clientMain.jar 127.0.0.1"
+
+5.You can also use sbt to run my code. Make sure you have set build.sbt correctly. A sample build.sbt is contained in forRunning folder.
+
+6. If you have difficulty running my code, please email me at hbwestsnow@gmail.com

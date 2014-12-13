@@ -1,0 +1,126 @@
+BitCoin-Mining
+==============
+
+GRUOP MEMBERS(name + ufid):
+shuai wu	78892935
+qiyao wang	96849507
+
+In my project, I finally generate two jars, bitcoinServer.jar and bitcoinClient.jar.
+To run bitcoinServer.jar, there are two parameters: numberOfZeros, and runtime. For example: "java -jar bitcoinServer.jar 6 100" will ask the server to calculate bitcoins start with "000000" and run for 100 seconds.(the default numberOfZeros is 5 the runtim time is 30 seconds)
+To run bitcoinClient.jar, there is one parameter, ie, the server's ip.
+
+1. size of work unit.
+ 
+When a worker is connected to server, the server will give the worker a preFix String like "shuai.wu0001","shuai.wu0002".
+"shuai.wu" is my gatorlink id, which is the prefix string of every client. And ths substring after "shuai.wu" is unique for every client. 
+After the client get its own prefix string, it just generate its own strings, like "abcd", and get the final string "shuai.wu0001abcd".
+Then the client use SHA256 to calculate the hashvalue, if the hash value is started with certain number of zeros, send the result to the server.
+
+With this method, the work unit the server give its works is in fact infinite. And the workers' won't calculate same strings. And the server don't even have to consider how to assagin work unit to clients frequently, just knowing that as long as the worker gets a result, it will receive it.
+
+2.The result of running your program for "java -jar bitcoinServer 4 10": 
+
+2.1 The environment:
+server: 			   lin116-09.cise.ufl.edu
+
+cpu info:
+rchitecture:           x86_64
+CPU op-mode(s):        32-bit, 64-bit
+Byte Order:            Little Endian
+CPU(s):                8
+On-line CPU(s) list:   0-7
+Thread(s) per core:    2
+Core(s) per socket:    4
+Socket(s):             1
+NUMA node(s):          1
+Vendor ID:             AuthenticAMD
+CPU family:            21
+Model:                 2
+Stepping:              0
+
+
+2.2 The result of running bitcoinServer.jar (the server itself is also a client machine):
+java -jar bitcoinServer.jar 4 30
+......
+shuai.wu0001kjFr	00008bb045aa31d3bb7d76ff48c1fcfa1ccbf43f493a78d66b740393d0a1f2d2
+shuai.wu0003m`Aq	0000d506e322e8c1683b8ed7ee033009eb4990587953d3ed5e89faff986c602a
+shuai.wu0003meMB	00003247d5bfb5de59051066288c22b8c4e272525118a72b2502befa446305fe
+shuai.wu0000mEVZ	0000138ae7d5056e7655ee548376b09225cc9ee065d3b894f611c4093f11521d
+shuai.wu0002keVX	0000854ed16161e480022e136b5762d2b07ffc3b5fd58c659d7f542864113c6c
+shuai.wu0001lMLc	00005b82184c7c78b69a6d117f28330678b41b011d8c45be827495e73d63c9f6
+shuai.wu0004mXOf	0000d2b289a9871d83c72087ce41ad0665f9cdc0dedbb72035bad04dcbd0d25e
+shuai.wu0003nLcH	00004dc798e5aad47fd8f7bc5b55cf3afc86d33be112fce86846bd5bb8aee2ae
+shuai.wu0002kySJ	0000970c48ae641e7d7227d9e7ecbd07a1ade2c4eaa8af32401886562e16f1e9
+shuai.wu0004m]jq	0000113ba98a61e0f1aa0a6a3adeeee60edaef2ad5b75901d5e62cac60bfb682
+
+after calculation of 30 seconds with 5  machines I have found 689 bit coins starting with 4 0s
+
+
+I only listed part of the results. in each machine, I opened 5 clients, so the server reports that there are 5 machines calculating.
+
+
+3. Report of CPU usage.
+
+The result of running "java -jar bitcoinServer.jar 5 30":
+shuai.wu0001teLs	00000210852214f5d45c4af4e2ad58456a36ae03f73f11a0265754a2b6dd14de
+shuai.wu0004tG^Z	000003f139fb018b5490211c66cf10a590c5492a83f725f45117026e2ef150ac
+shuai.wu0000t\mh	00000f28adc1eff81a44b99da36306c0e65e8127bf5406c6705d3d536b4f0738
+shuai.wu0001vliq	0000095c5b2caa3021d28005f2f0c76604e19bd80ed01550a2505ffc141b212f
+shuai.wu0000w]Dx	0000070993b183332e44b6153e3d77308cbca061e9100b09099f135bce56553b
+shuai.wu0003yDiP	0000039cda63bcfcd412f4989f6088e9769c309e291c56cb1d8cb3bb55997ae2
+shuai.wu0001zdiE	00000e766c69d338a1512c467838e60412b67f29f651676923df27a0e2fe8ab1
+shuai.wu0001zvwb	00000cd6a078cb9c6dea36ecaba9b867f1653eb9719e2c006dd750911873cf17
+shuai.wu0001AAMWh	00000cb096330559ae71684257e673731da5905d8d67e02bba93d744749ee924
+
+after calculation of 30 seconds with 5  machines I have found 61 bit coins starting with 5 0s
+
+
+In my laptop , the cpu has 4 cores, when running the server program, the cpu utilization is around 390%. When running on the server, the cpu utilization is about 500%, and the running time is merely 5 times the real time:
+
+  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND
+20911 shuai     20   0 11.669g 2.613g  13008 S 496.7  8.3   2:40.47 java
+20866 shuai     20   0   21060   1768   1092 R   0.7  0.0   0:01.00 top
+
+
+4. 
+I used 6 machines to try to find a coin with a long prefix strings of 0. They are:
+lin116-07,08,09,13,14,15
+
+The most zeros I can find within 5 minutes is 7. Within 5 minutes, I found such coin.
+
+The result:
+shuai.wu0001ebbe	0000000378d687ca87089b780fe5e3a9c4699dea21ecd60b7ac793d0bfac4566
+shuai.wu0013OCQ^	0000000295e75715d34a957cbc209fa5facf3ff76569566f514b7ebc68242835
+shuai.wu0025KX_w	0000000f8b73d482a41e980bfd672e41a3c33c4f91db069faf50445fb454bd4e
+shuai.wu0017AEQFK	0000000d12c98d784c3ebe5262ba97b4132eec121519951b17cab1fbe140a557
+shuai.wu0021AVqep	00000004d0eedccf98e072261a14d2386231936f92643499b79a9efa0ba9850c
+shuai.wu0004CmVCQ	0000000b26bc90d31d9aa186810e3e2f26b2516535f3d2970613d5e8e26cdc7b
+shuai.wu0023BWSJJ	0000000d4c7cf4a81e9edf7ee6c39ab74db7c59eb3582e16431b8f58901550a3
+shuai.wu0017Cv^[z	00000006f09e96927211556db062e3df4f196ceb26e16486bcd6849f1583de2b
+shuai.wu0004EdnWh	000000049b87b0091d0eb6048f7335db64c7a477e344c7a202be35f797286452
+shuai.wu0004ElWz_	0000000fd5a451463cfae333fbd641f20a3bf70c8febbd7557506220a54ac0c6
+shuai.wu0005EjM\A	0000000aa51803505550e372a9ffeeae882764e14f5f2b5bd0f749f5ba66db1e
+shuai.wu0006FsuIl	0000000408eb7319ca2ea457b9273e3e29f9eaccb954fb1beed3efa586b4b4f6
+shuai.wu0000Hrm\N	000000079e69d40def7ada8483d24890b2ba8241f3e7ee83476d1e1478cdd1e0
+shuai.wu0005Gzd]V	00000001b95ae9650d4840555b6229668da081cc7f5b910745ae777cbee3d39a
+shuai.wu0018Gc^TA	00000003d3ef1f2468464170c8023cef754b334946d32f7d7714bc7de1ade7be
+shuai.wu0020GzuTr	0000000c4c432226a71968c6651bd6ee9cf921683020c93640ef58de22e31d8e
+shuai.wu0007IbUYI	000000054d86a1b657c8c7983f52084dbca1b107e1e5ef0d3f19870f27051387
+shuai.wu0004K_iQX	0000000b0cc8864af68ec334419558af150eb9da99b1bdfd88ddd15fca17138f
+shuai.wu0006JPTHs	0000000801d64a9d7c4ae5ec0e7096a5a814d3aa2e64861fbeff001787b7aeb8
+shuai.wu0004KuyF^	0000000b2d26d3585a043d20070f1e190598054d5229e4789380bd968cd06b98
+
+after calculation of 300 seconds with 30  machines I have found 20 bit coins starting with 7 0s
+
+
+5.
+The server has 100,00 different prefix string(from 0000 to 9999) to assign to clients. Theoretically，there are at most 10000/5 = 2000 clients that can connect to server if the server is fast enough. However, it's impossible for me to test my code on 2000 machines. As mentioned above, I tested my code within 6 machines, they both worked well.
+
+
+
+
+
+
+
+
+
